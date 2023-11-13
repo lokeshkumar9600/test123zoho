@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swipe Slider Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/hammerjs@2.0.8/hammer.min.js">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+        /* Define the grid styles */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(14, 1fr);
+            /* 14 columns */
+            grid-template-rows: repeat(5, 70px);
+            /* 5 rows with a height of 100px each */
+            /* gap: 5px; Gap between grid items */
+        }
+
+        /* Style for grid items */
+        .grid-item {
+            /* border: 1px solid #000; */
+            /* padding: 5px; */
+
+            text-align: center;
+        }
+
+
+        .rack-item:hover {
+            background: rgba(8, 153, 159, 0.66);
+        }
+
+        /* Add your styles here */
+        .slider-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-content {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slider-item {
+            width: 100%;
+            flex: 0 0 100%;
+        }
+
+        /* Start with the second div hidden */
+        .rack-item {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            background: #FFB248;
+        }
+
+        .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Center the popup horizontally */
+            /* transform: translateX(-50%); Adjust for centering */
+            width: 255px;
+            height: 120px;
+            flex-shrink: 0;
+            padding: 10px;
+            display: none;
+            border-radius: 20px;
+            background: rgba(8, 153, 159, 0.80);
+            /* Adjust the background color and opacity */
+            color: #fff;
+            /* Set the text color */
+            z-index: 10;
+            /* max-width: calc(100% - 20px);Set a higher z-index to make it appear above other elements */
+        }
+
+        .popup1 {
+            position: absolute;
+            width: 264px;
+            height: 128px;
+            flex-shrink: 0;
+            top: 40%;
+            /* Position the popup below the rack-item */
+            left: 50%;
+            /* Center the popup horizontally */
+            /* transform: translateX(-50%); Adjust for centering */
+            padding: 10px;
+            display: none;
+            border-radius: 20px;
+            background: rgba(8, 153, 159, 0.48);
+            /* Adjust the background color and opacity */
+            color: #fff;
+            /* Set the text color */
+            z-index: 1000;
+        }
+
+        .rack-item:hover .popup {
+            display: block;
+        }
+
+        .rack-item:hover .popup1 {
+            display: block;
+        }
+
+        .loaded-img-div{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+height: 60px;
+flex-shrink: 0;
+border-radius: 7px;
+background: #00ADB5;
+        }
+
+        .inventory-description{
+           margin-bottom:0px;color: #FFF;
+         font-family: Inter;
+          font-size: 14px;
+          font-style: normal;
+           font-weight: 600;
+           line-height: 158.023%; /* 25.284px */
+           letter-spacing: -0.56px;;
+        }
+
+        .inventory-grn{
+            color: #333;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 158.023%;
+letter-spacing: -0.49px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-div">
+        <div class="slider-container" id="sliderContainer">
+            <div class="slider-content" id="sliderContent">
+                <!-- Your HTML content for each slide -->
+                <div class="slider-item">
+                    <h4 class="ms-5 mt-3 pt-3"
+                        style="color: #08999F; font-family: Inter;font-size: 36px;font-style: normal;font-weight: 700;line-height: normal;">
+                        Rack A</h4>
+                    <p class="ms-5"
+                        style="color: #A4A4A4;font-family: Inter;font-size: 13px;font-style: normal;font-weight: 600;line-height: normal;">
+                        Battery Box | Front Wheel | Front Assembly | Lower Assembly</p>
+                    <div style="padding:30px 40px 40px 40px">
+                        <div class="grid-container">
+                            <!-- Row 1 -->
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup d-flex justify-content-center align-items-center" >
+                                           <div class="container">
+                                               <div class="row">
+                                                  <div class="col-3" >
+                                                    <div class="loaded-img-div">
+                                                        <img src="https://i.ibb.co/3Sz0MfF/image-2.png" style="object-fit: contain;width: 51.25px;height: 40px;flex-shrink: 0;" alt="" class="src">
+                                                    </div>         
+                                                  </div>
+                                                  <div class="col-9">
+                                                    <div style="flex-direction: column; display: flex; align-items: flex-start;">
+                                                        <p class="ms-2 mt-1 inventory-description" >A-14-5 <span id="A-14-5">#BB0010/A</span></p>
+                                                        <p class="ms-2 mt-1 inventory-grn">GR23K9001</p>
+                                                    </div>
+                                                  </div>
+                                               </div>
+                                           </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;">
+                                    <div class="popup"></div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Row 2 -->
+                            <!-- Repeat the pattern for the remaining rows -->
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item">
+                    <h4 class="ms-5 mt-3 pt-3"
+                        style="color: #08999F; font-family: Inter;font-size: 36px;font-style: normal;font-weight: 700;line-height: normal;">
+                        Rack B</h4>
+                    <p class="ms-5"
+                        style="color: #A4A4A4;font-family: Inter;font-size: 13px;font-style: normal;font-weight: 600;line-height: normal;">
+                        Power Train | Rear Assembly | Rear Wheel| Braking System </p>
+                    <div style="padding:30px 40px 40px 40px">
+                        <div class="grid-container">
+                            <!-- Row 1 -->
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;">
+                                    <div class="popup"></div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Row 2 -->
+                            <!-- Repeat the pattern for the remaining rows -->
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item">
+                    <h4 class="ms-5 mt-3 pt-3"
+                        style="color: #08999F; font-family: Inter;font-size: 36px;font-style: normal;font-weight: 700;line-height: normal;">
+                        Rack C</h4>
+                    <p class="ms-5"
+                        style="color: #A4A4A4;font-family: Inter;font-size: 13px;font-style: normal;font-weight: 600;line-height: normal;">
+                        Body Panel | VCU | Electronics| Motor Controller </p>
+                    <div style="padding:30px 40px 40px 40px">
+                        <div class="grid-container">
+                            <!-- Row 1 -->
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;">
+                                    <div class="popup"></div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -0%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item" style="background: #FFDFAB;"></div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(0%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%,-90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-item">
+                                <div class="rack-item">
+                                    <div class="popup1" style="transform: translate(-100%, -90%);">
+                                        <div class="popup"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Row 2 -->
+                            <!-- Repeat the pattern for the remaining rows -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/hammerjs@2.0.8/hammer.min.js"></script>
+    <script src="https://js.zohostatic.com/creator/widgets/version/1.0/widgetsdk-min.js"></script>
+    <script>
+        // Initialize Hammer.js
+        var sliderContainer = document.getElementById('sliderContainer');
+        var sliderContent = document.getElementById('sliderContent');
+        var currentSlide = 0;
+
+        var mc = new Hammer(sliderContainer);
+
+        // Swipe event handling
+        mc.on('swipeleft swiperight', function (ev) {
+            if (ev.type === 'swipeleft') {
+                showNextSlide();
+            } else if (ev.type === 'swiperight') {
+                showPrevSlide();
+            }
+        });
+
+        // Functions to navigate slides
+        function showNextSlide() {
+            currentSlide = (currentSlide + 1) % 3;
+            updateSlider();
+        }
+
+        function showPrevSlide() {
+            currentSlide = (currentSlide - 1 + 3) % 3;
+            updateSlider();
+        }
+
+        // Function to update the slider content
+        function updateSlider() {
+            var transformValue = -currentSlide * 100 + '%';
+            sliderContent.style.transform = 'translateX(' + transformValue + ')';
+        }
+    </script>
+    <script>
+const url = 'https://creator.zoho.in/api/v2.1/gallus/erp-raptee/report/Vendor_Application';
+const token = '1000.f8ed7fb61930aeaf43c1c31a71e954e7.f6c481e840db2ea243690fda699b78b2';
+
+fetch(url, {
+  method: 'GET',
+  headers: {
+    'Authorization': `Zoho-oauthtoken ${token}`
+  },
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Error:', error.message);
+  });
+    </script>
+
+
+</body>
+
+</html>
